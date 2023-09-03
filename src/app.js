@@ -70,6 +70,15 @@ for (let i = 0; i < buttonSelectors.length; i++) {
                 } else {
                     currentValue += "!";
                 }
+            } else if (
+                value == "sin" ||
+                value == "ln" ||
+                value == "cos" ||
+                value == "log" ||
+                value == "tan" ||
+                value == "√"
+            ) {
+                currentValue += `${value}(`;
             } else if (value == "=") {
                 evaluate();
             } else if (value == "Fx") {
