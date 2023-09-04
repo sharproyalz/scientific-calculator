@@ -118,6 +118,9 @@ for (let i = 0; i < buttonSelectors.length; i++) {
                 ansChange.innerText = "Rnd";
 
                 xyChange[0].classList.remove("d-md-inline");
+                xyChange[1].classList.remove("d-none");
+
+                xyChange[0].classList.add("d-none");
                 xyChange[1].classList.add("d-md-inline");
             } else {
                 showInv.classList.remove("d-md-inline");
@@ -132,6 +135,9 @@ for (let i = 0; i < buttonSelectors.length; i++) {
                 ansChange.innerText = "Ans";
 
                 xyChange[1].classList.remove("d-md-inline");
+                xyChange[0].classList.remove("d-none");
+
+                xyChange[1].classList.add("d-none");
                 xyChange[0].classList.add("d-md-inline");
             }
         }
