@@ -15,7 +15,6 @@ for (let i = 0; i < buttonSelectors.length; i++) {
             if (currentValue.match(/(\d+)!/)) {
                 const inputValue = currentValue;
                 const numericValue = parseInt(inputValue);
-                console.log(numericValue);
                 result = 1;
                 for (let i = 2; i <= numericValue; i++) {
                     result *= i;
@@ -29,40 +28,62 @@ for (let i = 0; i < buttonSelectors.length; i++) {
 
                     currentValue = result.toString();
                 }
-            }
-            // else if (degreeeMode) {
-            //     const parts = currentValue.split("(");
-            //     console.log(parts);
-            //     result = parseInt(parts[1]) * (180 / Math.PI);
-            //     console.log("(");
-            //     console.log(Math.sin(result));
-            //     const convertedValue = currentValue
-            //         .replace("sin", "Math.sin")
-            //         .replace("cos", "Math.cos")
-            //         .replace("tan", "Math.tan");
-
-            //     result = eval(convertedValue);
-            //     currentValue = result.toString();
-            //     lastValue = result.toString();
-            // }
-            else {
-                const convertedValue = currentValue
-                    .replace("sin", "Math.sin")
-                    .replace("cos", "Math.cos")
-                    .replace("tan", "Math.tan")
-                    .replace("÷", "/")
-                    .replace("x", "*")
-                    .replace("%", "*.01")
-                    .replace("ln", "Math.log")
-                    .replace("π", "Math.PI")
-                    .replace("log", "Math.log10")
-                    .replace("e", "2.718281828459045")
-                    .replace("√", "Math.sqrt")
-                    .replace("^", "**")
-                    .replace("²", "**2")
-                    .replace("Ans", lastValue);
-
-                result = eval(convertedValue);
+            } else if (degreeeMode) {
+                let removedParenthesis = currentValue.replace(")", "");
+                let parts = removedParenthesis.split("(");
+                resultedDegree = parseInt(parts[1]) * (Math.PI / 180);
+                answer = Math.sin(result);
+                if (parts[0] == "sin") {
+                    result = Math.sin(resultedDegree);
+                } else if (parts[0] == "tan") {
+                    result = Math.tan(resultedDegree);
+                } else if (parts[0] == "cos") {
+                    result = Math.cos(resultedDegree);
+                } else {
+                    const convertedValue = currentValue
+                        .replace("÷", "/")
+                        .replace("x", "*")
+                        .replace("%", "*.01")
+                        .replace("ln", "Math.log")
+                        .replace("π", "Math.PI")
+                        .replace("log", "Math.log10")
+                        .replace("e", "2.718281828459045")
+                        .replace("√", "Math.sqrt")
+                        .replace("^", "**")
+                        .replace("²", "**2")
+                        .replace("Ans", lastValue);
+                    result = eval(convertedValue);
+                }
+                currentValue = result.toString();
+                lastValue = result.toString();
+            } else {
+                if (currentValue.includes("arc")) {
+                    const convertedValue = currentValue
+                        .replace("arcsin", "Math.asin")
+                        .replace("arccos", "Math.acos")
+                        .replace("arctan", "Math.atan");
+                    result = eval(convertedValue);
+                } else {
+                    const convertedValue = currentValue
+                        .replace("arcsin", "Math.asin")
+                        .replace("arccos", "Math.acos")
+                        .replace("arctan", "Math.atan")
+                        .replace("sin", "Math.sin")
+                        .replace("cos", "Math.cos")
+                        .replace("tan", "Math.tan")
+                        .replace("÷", "/")
+                        .replace("x", "*")
+                        .replace("%", "*.01")
+                        .replace("ln", "Math.log")
+                        .replace("π", "Math.PI")
+                        .replace("log", "Math.log10")
+                        .replace("e", "2.718281828459045")
+                        .replace("√", "Math.sqrt")
+                        .replace("^", "**")
+                        .replace("²", "**2")
+                        .replace("Ans", lastValue);
+                    result = eval(convertedValue);
+                }
                 currentValue = result.toString();
                 lastValue = result.toString();
             }
@@ -81,6 +102,8 @@ for (let i = 0; i < buttonSelectors.length; i++) {
                 element.classList.add("d-none");
             });
 
+            const hideXY = document.querySelector(".toggle-hide");
+            hideXY.classList.add("d-none");
             toggleNumber = document.querySelector(off);
             toggleFx = document.querySelector(on);
 
@@ -205,8 +228,6 @@ for (let i = 0; i < buttonSelectors.length; i++) {
 
                     degreeeMode = true;
                 }
-
-                console.log(degreeeMode);
             } else if (value == "Fx") {
                 displayHideShow(
                     ".col-3.show-buttons",
@@ -231,11 +252,6 @@ for (let i = 0; i < buttonSelectors.length; i++) {
         } catch (error) {
             currentValue = "ERROR";
             displayOutput.value = currentValue;
-            console.log(error);
         }
     });
 }
-
-const degrees = 45;
-const degreee = Math.sin(45);
-console.log(degreee);
